@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Maciuś ❤️ Madzia</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffeef6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* KARTA */
+.card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 50px 40px 60px;
+    border-radius: 30px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.15);
+    text-align: center;
+    min-width: 320px;
+    animation: popIn 1s ease;
+}
+
+@keyframes popIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+h1 {
+    color: #d6336c;
+    margin-bottom: 40px;
+    white-space: pre-line;
+}
+
+/* BUTTONY */
+button {
+    padding: 16px 34px;
+    font-size: 18px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+#yes {
+    background: linear-gradient(135deg, #ff4d6d, #ff758f);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255, 77, 109, 0.4);
+    margin-right: 15px;
+}
+
+#no {
+    background: #c7cbd1;
+    color: white;
+}
+
+/* GIF */
+img {
+    display: none;
+    margin: 30px auto 0;
+    width: 280px;
+}
+
+/* SERDUSZKA */
+.heart {
+    position: fixed;
+    font-size: 24px;
+    animation: floatUp 3s linear forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-150px) scale(1.5);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1 id="text">
+Madzia…  
+czy zostaniesz moją walentynką?💖
+    </h1>
+
+    <button id="yes">TAK ❤️</button>
+    <button id="no">NIE 🥺</button>
+
+    
+    <img id="gif" src="kotki.gif">
+</div>
+
+
+<audio id="music" src="muzyczka.mp3" loop></audio>
+
+<script>
+const noTexts = [
+    "Madzia no weź 🥺",
+    "nie bądź taka 😭",
+    "Nie rób mi tego...",
+    "to naprawdę ważne 💗",
+    "okej… już nie pytam 😔"
+];
+
+let noClicks = 0;
+
+const text = document.getElementById("text");
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+const gif = document.getElementById("gif");
+const music = document.getElementById("music");
+
+function heartExplosion() {
+    for (let i = 0; i < 35; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "❤️";
+        h.style.left = Math.random() * window.innerWidth + "px";
+        h.style.top = Math.random() * window.innerHeight + "px";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 3000);
+    }
+}
+
+noBtn.addEventListener("click", () => {
+    if (noClicks < noTexts.length) {
+        text.innerText = noTexts[noClicks];
+        noClicks++;
+        yesBtn.style.transform = `scale(${1 + noClicks * 0.2})`;
+    }
+
+    if (noClicks === 5) {
+        noBtn.style.display = "none";
+    }
+});
+
+yesBtn.addEventListener("click", () => {
+    text.innerText =
+        "Wiedziałem, że się zgodzisz! ❤️🥰\n kocham cię skarbie, buziaki mwa mwa wma<3";
+
+    gif.style.display = "block";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+
+    music.play();
+    heartExplosion();
+    startHeartRain();
+
+});
+
+let heartInterval = null;
+
+function startHeartRain() {
+    heartInterval = setInterval(() => {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerText = "❤️";
+        h.style.left = Math.random() * window.innerWidth + "px";
+        h.style.top = window.innerHeight + "px";
+        document.body.appendChild(h);
+
+        setTimeout(() => h.remove(), 3000);
+    }, 400);
+}
+
+</script>
+
+</body>
+</html>
